@@ -11,7 +11,7 @@ const ModalAberto = ({ isOpen, onClose, eventDetails, onSave, onDelete }) => {
   }, [eventDetails]);
 
   const handleSave = () => {
-    if (events.every(event => event.title.trim() && event.description.trim())) {
+    if (events.every(event => event.title.trim() && event.description.trim() && event.start && event.end)) {
       onSave(events);
       onClose();
     } else {
@@ -52,6 +52,16 @@ const ModalAberto = ({ isOpen, onClose, eventDetails, onSave, onDelete }) => {
               placeholder="Descrição do evento"
               value={event.description}
               onChange={(e) => handleInputChange(index, 'description', e.target.value)}
+            />
+            <InputField
+              type="time"
+              value={event.start ? event.start.split('T')[1].substring(0, 5) : ''}
+              onChange={(e) => handleInputChange(index, 'start', `${event.start.split('T')[0]}T${e.target.value}:00`)}
+            />
+            <InputField
+              type="time"
+              value={event.end ? event.end.split('T')[1].substring(0, 5) : ''}
+              onChange={(e) => handleInputChange(index, 'end', `${event.end.split('T')[0]}T${e.target.value}:00`)}
             />
             <ButtonContainer>
               <Button onClick={() => handleDelete(event.id)} style={{ backgroundColor: '#d9534f' }}>

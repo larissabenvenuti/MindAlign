@@ -23,7 +23,9 @@ export default function Calendar() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("calendarEvents", JSON.stringify(events));
+    if (events.length > 0) {
+      localStorage.setItem("calendarEvents", JSON.stringify(events));
+    }
   }, [events]);
 
   const handleDateClick = (info) => {
@@ -91,6 +93,7 @@ export default function Calendar() {
           </div>
           <div>
             <CalendarLabel>📅 Calendário Diário: </CalendarLabel>
+            <Today>
             <FullCalendar
               plugins={[timeGridPlugin, interactionPlugin]}
               initialView="timeGridDay"
@@ -106,6 +109,7 @@ export default function Calendar() {
               dateClick={handleDateClick}
               eventClick={handleEventClick}
             />
+            </Today>
           </div>
         </CalendarGrid>
       </CalendarWrapper>
