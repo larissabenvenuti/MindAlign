@@ -21,7 +21,7 @@ export const CalendarContainer = styled.div`
 `;
 
 export const CalendarWrapper = styled.div`
-  width: 100%;
+  width: 90%;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -32,7 +32,7 @@ export const CalendarWrapper = styled.div`
 export const CalendarGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  gap: 50px;
   width: 100%;
 
   @media (max-width: 768px) {
@@ -42,9 +42,8 @@ export const CalendarGrid = styled.div`
 
 export const CalendarLabel = styled.h3`
   font-size: 1.8rem;
-  font-style: italic;
+  font-weight: bold;
   margin-bottom: 25px;
-  font-weight: normal;
   color: ${colors.text};
   padding: 12px;
   display: inline-block;
@@ -65,7 +64,7 @@ export const Today = styled.div`
     border: 2px solid ${colors.primary};
     color: ${colors.white};
     font-size: 1rem;
-    padding: 8px 12px;
+    padding: 5px 7px;
     cursor: pointer;
     transition: background-color 0.3s ease, border-color 0.3s ease;
     border-radius: 8px;
@@ -91,7 +90,7 @@ export const Today = styled.div`
     transition: background-color 0.2s ease, transform 0.2s ease;
 
     &:hover {
-      transform: scale(1.05);
+      transform: scale(1.06);
     }
   }
 
