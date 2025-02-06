@@ -19,7 +19,7 @@ export default function Home() {
         </Card>
         <Card onClick={() => navigate("/diary")}>
           <h2>📖 Diário</h2>
-          <p>Registre seus pensamentos e momentos do dia.</p>
+          <p>Registre seus pensamentos e anotações.</p>
         </Card>
       </CardsContainer>
     </HomeContainer>

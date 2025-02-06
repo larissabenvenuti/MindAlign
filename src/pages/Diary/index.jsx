@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { DiaryContainer, EntryForm, EntryList, EntryCard } from "./diary";
+import {
+  DiaryContainer,
+  EntryForm,
+  EntryList,
+  EntryCard,
+  TextArea,
+  Button,
+  DeleteButton,
+  DiaryLabel,
+  TextAndButton,
+} from "./diary";
+import { FaTrash } from "react-icons/fa";
 
 export default function Diary() {
   const [entries, setEntries] = useState([]);
@@ -20,30 +31,44 @@ export default function Diary() {
 
   const handleAddEntry = () => {
     if (text.trim() !== "") {
-      setEntries([{ text, date: new Date().toLocaleDateString() }, ...entries]);
+      const newEntry = { text, date: new Date().toLocaleDateString() };
+      const updatedEntries = [newEntry, ...entries];
+      setEntries(updatedEntries);
       setText("");
     }
   };
 
+  const handleDeleteEntry = (index) => {
+    const updatedEntries = entries.filter((_, i) => i !== index);
+    setEntries(updatedEntries);
+  };
+
   return (
     <DiaryContainer>
-      <h1>📖 Meu Diário</h1>
+      <DiaryLabel>📖 Meu Diário</DiaryLabel>
       <EntryForm>
-        <textarea
+        <TextAndButton>
+        <TextArea
           placeholder="Escreva seu pensamento..."
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <button onClick={handleAddEntry}>Adicionar</button>
-      </EntryForm>
+        <Button onClick={handleAddEntry}>Adicionar</Button>
+        </TextAndButton>
       <EntryList>
         {entries.map((entry, index) => (
           <EntryCard key={index}>
-            <p>{entry.text}</p>
-            <small>{entry.date}</small>
+            <div>
+              <p>{entry.text}</p>
+              <small>{entry.date}</small>
+            </div>
+            <DeleteButton onClick={() => handleDeleteEntry(index)}>
+              <FaTrash />
+            </DeleteButton>
           </EntryCard>
         ))}
       </EntryList>
+      </EntryForm>
     </DiaryContainer>
   );
 }

@@ -36,17 +36,30 @@ export default function Calendar() {
 
   const handleEventClick = (info) => {
     const clickedEvent = events.find(event => event.id === info.event.id);
-    setSelectedEvent([clickedEvent]);
+    setSelectedEvent(clickedEvent);
     setIsModalAbertoOpen(true);
   };
 
   const handleSaveEvent = (newEvent) => {
+    const startDate = new Date(newEvent.start);
+    const endDate = new Date(newEvent.end);
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      alert("Por favor, insira horários válidos.");
+      return;
+    }
+
+    const updatedEvent = {
+      ...newEvent,
+      start: startDate, 
+      end: endDate      
+    };
+
     if (newEvent.id) {
       setEvents(prevEvents => prevEvents.map(event =>
-        event.id === newEvent.id ? { ...event, title: newEvent.title, description: newEvent.description, start: newEvent.start, end: newEvent.end } : event
+        event.id === newEvent.id ? updatedEvent : event
       ));
     } else {
-      const newEventWithId = { ...newEvent, id: Date.now().toString(), start: newEvent.start, end: newEvent.end };
+      const newEventWithId = { ...updatedEvent, id: Date.now().toString() };
       setEvents(prevEvents => [...prevEvents, newEventWithId]);
     }
   };
@@ -54,7 +67,7 @@ export default function Calendar() {
   const handleDeleteEvent = (id) => {
     const updatedEvents = events.filter(event => event.id !== id);
     setEvents(updatedEvents);
-    setIsModalAbertoOpen(false); 
+    setIsModalAbertoOpen(false);
   };
 
   const handleCloseModal = () => {
@@ -80,8 +93,8 @@ export default function Calendar() {
                 locale={ptLocale}
                 headerToolbar={{
                   left: "prev,next today",
-                  center: "",
-                  right: "title",
+                  center: "title",
+                  right: "",
                 }}
                 editable={true}
                 selectable={true}
@@ -94,21 +107,29 @@ export default function Calendar() {
           <div>
             <CalendarLabel>📅 Calendário Diário: </CalendarLabel>
             <Today>
-            <FullCalendar
-              plugins={[timeGridPlugin, interactionPlugin]}
-              initialView="timeGridDay"
-              locale={ptLocale}
-              headerToolbar={{
-                left: "prev,next today",
-                center: "",
-                right: "title",
-              }}
-              editable={true}
-              selectable={true}
-              events={events}
-              dateClick={handleDateClick}
-              eventClick={handleEventClick}
-            />
+              <FullCalendar
+                plugins={[timeGridPlugin, interactionPlugin]}
+                initialView="timeGridDay"
+                locale={ptLocale}
+                headerToolbar={{
+                  left: "prev,next today",
+                  center: "title",
+                  right: "",
+                }}
+                editable={false}
+                selectable={true}
+                events={events.map(event => ({
+                  ...event,
+                  start: event.start instanceof Date ? event.start : new Date(event.start),
+                  end: event.end instanceof Date ? event.end : new Date(event.end),
+                }))}
+                dateClick={handleDateClick}
+                eventClick={handleEventClick}
+                allDaySlot={false}
+                slotDuration="00:30:00"
+                slotLabelFormat={{ hour: '2-digit', minute: '2-digit', hour12: false }}
+                eventTimeFormat={{ hour: '2-digit', minute: '2-digit', hour12: false }}
+              />
             </Today>
           </div>
         </CalendarGrid>
@@ -125,7 +146,7 @@ export default function Calendar() {
       <ModalAberto
         isOpen={isModalAbertoOpen}
         onClose={handleCloseModalAberto}
-        eventDetails={selectedEvent || []}
+        eventDetails={selectedEvent || {}}
         onSave={handleSaveEvent}
         onDelete={handleDeleteEvent}
       />

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { ModalOverlay, ModalContainer, ModalHeader, InputField, TextField, Button, ButtonContainer } from './modal';
 
-const ModalAberto = ({ isOpen, onClose, eventDetails, onSave, onDelete }) => {
+const ModalAberto = ({ isOpen, onClose, eventDetails = [], onSave, onDelete }) => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    if (eventDetails) {
+    if (Array.isArray(eventDetails)) {
       setEvents(eventDetails);
+    } else {
+      setEvents([eventDetails]);
     }
   }, [eventDetails]);
 
@@ -29,6 +31,14 @@ const ModalAberto = ({ isOpen, onClose, eventDetails, onSave, onDelete }) => {
     const updatedEvents = [...events];
     updatedEvents[index][field] = value;
     setEvents(updatedEvents);
+  };
+
+  const formatTime = (time) => {
+    if (!time) return '';
+    const date = new Date(time);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
   };
 
   if (!isOpen) return null;
@@ -55,12 +65,12 @@ const ModalAberto = ({ isOpen, onClose, eventDetails, onSave, onDelete }) => {
             />
             <InputField
               type="time"
-              value={event.start ? event.start.split('T')[1].substring(0, 5) : ''}
+              value={formatTime(event.start)} 
               onChange={(e) => handleInputChange(index, 'start', `${event.start.split('T')[0]}T${e.target.value}:00`)}
             />
             <InputField
               type="time"
-              value={event.end ? event.end.split('T')[1].substring(0, 5) : ''}
+              value={formatTime(event.end)} 
               onChange={(e) => handleInputChange(index, 'end', `${event.end.split('T')[0]}T${e.target.value}:00`)}
             />
             <ButtonContainer>

@@ -28,9 +28,10 @@ const Modal = ({ isOpen, onClose, onSave, currentDate, existingEvent }) => {
         id: existingEvent?.[0]?.id || null,
         title,
         description,
-        start: `${currentDate.toISOString().split('T')[0]}T${startTime}:00`,
-        end: `${currentDate.toISOString().split('T')[0]}T${endTime}:00`,
+        start: new Date(currentDate).setHours(...startTime.split(':').map((time) => parseInt(time))),
+        end: new Date(currentDate).setHours(...endTime.split(':').map((time) => parseInt(time))),
       };
+
       onSave(newEvent);
       onClose();
     } else {

@@ -8,8 +8,6 @@ const colors = {
   text: "#000",
   white: "#fff",
   shadow: "rgba(0, 0, 0, 0.1)",
-  highlight: "#22adc5",
-  highlightHover: "#1a8c9c",
   border: "#ccc",
 };
 
@@ -19,32 +17,35 @@ export const ListContainer = styled.div`
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   padding: 20px;
+  flex-direction: column;
+  text-align: center;
+  background: ${colors.background}; 
+  
+  h1 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: ${colors.primary};
+  }
+
   @media (max-width: 767px) {
     margin-top: 80px;
     padding: 10px;
   }
 `;
 
-export const ListLabel = styled.h3`
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 25px;
-  color: ${colors.text};
-  padding: 12px;
-  display: inline-block;
-  letter-spacing: 1px;
-  position: relative;
-`;
-
 export const ListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 800px;
   background: ${colors.white};
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 10px ${colors.shadow};
+  margin-bottom: 20px;
   
   .task-input {
     display: flex;
@@ -63,14 +64,15 @@ export const ListWrapper = styled.div`
   }
 `;
 
-export const ListHeader = styled.div`
-  text-align: center;
-  margin-bottom: 20px;
-
-  h1 {
-    font-size: 2rem;
-    color: ${colors.primary};
-  }
+export const ListLabel = styled.h3`
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: ${colors.text};
+  padding: 12px;
+  display: inline-block;
+  letter-spacing: 1px;
+  position: relative;
 `;
 
 export const ListContent = styled.div`
@@ -148,7 +150,7 @@ export const TaskCounter = styled.p`
   color: ${colors.text};
   text-align: center;
   margin-top: 10px;
-  
+
   span {
     font-weight: bold;
     color: ${colors.primary};
@@ -168,15 +170,17 @@ export const EmptyState = styled.div`
 
 export const DeleteButton = styled.button`
   position: absolute;
-  right: 10px; 
+  right: 10px;
   top: 50%;
-  transform: translateY(-50%); 
+  transform: translateY(-50%);
   background: none;
   border: none;
-  color: red;
   cursor: pointer;
+  color: ${colors.primary};
   font-size: 1.2rem;
+  transition: color 0.3s ease;
+
   &:hover {
-    color: darkred;
+    color: ${colors.primaryHover};
   }
 `;

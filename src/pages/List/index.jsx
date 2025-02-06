@@ -4,7 +4,6 @@ import {
   ListWrapper,
   ListLabel,
   ListCard,
-  ListHeader,
   ListContent,
   AddButton,
   Input,
@@ -12,12 +11,13 @@ import {
   Checkbox,
   TaskCounter,
   EmptyState,
-  DeleteButton 
-} from "./list"; 
+  DeleteButton,
+} from "./list";
+import { FaTrash } from "react-icons/fa";
 
 export default function List() {
   const [tasks, setTasks] = useState([]);
-  
+
   useEffect(() => {
     const savedTasks = localStorage.getItem("tasks");
     if (savedTasks) {
@@ -37,7 +37,7 @@ export default function List() {
     if (newTask.trim()) {
       const updatedTasks = [...tasks, { text: newTask, completed: false }];
       setTasks(updatedTasks);
-      setNewTask(""); 
+      setNewTask("");
     }
   };
 
@@ -53,15 +53,13 @@ export default function List() {
     setTasks(updatedTasks);
   };
 
-  const completedTasks = tasks.filter(task => task.completed).length;
+  const completedTasks = tasks.filter((task) => task.completed).length;
   const totalTasks = tasks.length;
 
   return (
     <ListContainer>
+      <ListLabel>📋 Minha Lista de Tarefas</ListLabel>
       <ListWrapper>
-        <ListHeader>
-          <ListLabel>📋 Minha Lista de Tarefas</ListLabel>
-        </ListHeader>
         <ListContent>
           <div className="task-input">
             <Input
@@ -73,11 +71,14 @@ export default function List() {
             <AddButton onClick={handleAddTask}>Adicionar</AddButton>
           </div>
           {totalTasks === 0 ? (
-            <EmptyState>🎉 Nenhuma tarefa pendente! Adicione uma nova.</EmptyState>
+            <EmptyState>
+              🎉 Nenhuma tarefa pendente! Adicione uma nova.
+            </EmptyState>
           ) : (
             <>
               <TaskCounter>
-                Concluídas: <span>{completedTasks}</span> / <span>{totalTasks}</span>
+                Concluídas: <span>{completedTasks}</span> /{" "}
+                <span>{totalTasks}</span>
               </TaskCounter>
               <div className="task-list">
                 {tasks.map((task, index) => (
@@ -89,7 +90,9 @@ export default function List() {
                         onChange={() => handleToggleTask(index)}
                       />
                       <span>{task.text}</span>
-                      <DeleteButton onClick={() => handleDeleteTask(index)}>🗑️</DeleteButton>
+                      <DeleteButton onClick={() => handleDeleteTask(index)}>
+                        <FaTrash />
+                      </DeleteButton>
                     </TaskItem>
                   </ListCard>
                 ))}
