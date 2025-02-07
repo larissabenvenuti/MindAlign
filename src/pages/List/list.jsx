@@ -112,6 +112,7 @@ export const TaskItem = styled.div`
   span {
     text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
     color: ${(props) => (props.completed ? colors.secondary : colors.text)};
+    overflow: hidden;
   }
 `;
 
