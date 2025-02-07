@@ -1,95 +1,108 @@
-import React, { useState, useEffect } from 'react';
-import { ModalOverlay, ModalContainer, ModalHeader, InputField, TextField, Button, ButtonContainer } from './modal';
+import React, { useState, useEffect } from "react";
+import {
+  ModalOverlay,
+  ModalContainer,
+  ModalHeader,
+  InputField,
+  TextField,
+  Button,
+  ButtonContainer,
+} from "./modal";
 
-const ModalAberto = ({ isOpen, onClose, eventDetails = [], onSave, onDelete }) => {
-  const [events, setEvents] = useState([]);
+const ModalAberto = ({ isOpen, onClose, eventDetails, onSave, onDelete }) => {
+  const [event, setEvent] = useState({});
 
   useEffect(() => {
-    if (Array.isArray(eventDetails)) {
-      setEvents(eventDetails);
-    } else {
-      setEvents([eventDetails]);
+    if (eventDetails) {
+      const startTime = new Date(eventDetails.start);
+      const endTime = new Date(eventDetails.end);
+
+      setEvent({
+        ...eventDetails,
+        start: startTime.toTimeString().slice(0, 5),
+        end: endTime.toTimeString().slice(0, 5),
+      });
     }
   }, [eventDetails]);
 
+  const handleInputChange = (field, value) => {
+    setEvent((prev) => ({ ...prev, [field]: value }));
+  };
+
   const handleSave = () => {
-    if (events.every(event => event.title.trim() && event.description.trim() && event.start && event.end)) {
-      onSave(events);
-      onClose();
-    } else {
-      alert('Por favor, preencha todos os campos');
+    if (!event.title || !event.description || !event.start || !event.end) {
+      alert("Preencha todos os campos corretamente.");
+      return;
     }
+
+    const startDateTime = new Date(
+      event.start instanceof Date ? event.start : new Date()
+    );
+    const endDateTime = new Date(
+      event.end instanceof Date ? event.end : new Date()
+    );
+
+    const [startHour, startMinute] = event.start.split(":").map(Number);
+    const [endHour, endMinute] = event.end.split(":").map(Number);
+
+    startDateTime.setHours(startHour, startMinute, 0);
+    endDateTime.setHours(endHour, endMinute, 0);
+
+    if (endDateTime <= startDateTime) {
+      alert("O horário de término deve ser após o início.");
+      return;
+    }
+
+    const updatedEvent = {
+      ...event,
+      start: startDateTime.toISOString(),
+      end: endDateTime.toISOString(),
+      backgroundColor: "#b96464",
+      borderColor: "#b96464",
+    };
+
+    onSave(updatedEvent);
+    onClose();
   };
 
-  const handleDelete = (id) => {
-    const updatedEvents = events.filter(event => event.id !== id);
-    setEvents(updatedEvents);
-    onDelete(id);
-  };
-
-  const handleInputChange = (index, field, value) => {
-    const updatedEvents = [...events];
-    updatedEvents[index][field] = value;
-    setEvents(updatedEvents);
-  };
-
-  const formatTime = (time) => {
-    if (!time) return '';
-    const date = new Date(time);
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${hours}:${minutes}`;
-  };
-
-  if (!isOpen) return null;
-
-  return (
+  return isOpen ? (
     <ModalOverlay>
       <ModalContainer>
-        <ModalHeader>
-          {events.length > 1 ? 'Visualizar e Editar Eventos' : `Editar Evento - ${events[0]?.title || ''}`}
-        </ModalHeader>
-
-        {events.map((event, index) => (
-          <div key={event.id}>
-            <InputField
-              type="text"
-              placeholder="Título do evento"
-              value={event.title}
-              onChange={(e) => handleInputChange(index, 'title', e.target.value)}
-            />
-            <TextField
-              placeholder="Descrição do evento"
-              value={event.description}
-              onChange={(e) => handleInputChange(index, 'description', e.target.value)}
-            />
-            <InputField
-              type="time"
-              value={formatTime(event.start)} 
-              onChange={(e) => handleInputChange(index, 'start', `${event.start.split('T')[0]}T${e.target.value}:00`)}
-            />
-            <InputField
-              type="time"
-              value={formatTime(event.end)} 
-              onChange={(e) => handleInputChange(index, 'end', `${event.end.split('T')[0]}T${e.target.value}:00`)}
-            />
-            <ButtonContainer>
-              <Button onClick={() => handleDelete(event.id)} style={{ backgroundColor: '#d9534f' }}>
-                Excluir
-              </Button>
-            </ButtonContainer>
-          </div>
-        ))}
-
+        <ModalHeader>Editar Evento</ModalHeader>
+        <InputField
+          type="text"
+          value={event.title || ""}
+          onChange={(e) => handleInputChange("title", e.target.value)}
+        />
+        <TextField
+          value={event.description || ""}
+          onChange={(e) => handleInputChange("description", e.target.value)}
+        />
+        <InputField
+          type="time"
+          value={event.start || ""}
+          onChange={(e) => handleInputChange("start", e.target.value)}
+        />
+        <InputField
+          type="time"
+          value={event.end || ""}
+          onChange={(e) => handleInputChange("end", e.target.value)}
+        />
         <ButtonContainer>
-          <Button onClick={handleSave}>Salvar Alterações</Button>
-          <Button onClick={onClose} style={{ backgroundColor: '#858585' }}>
+          <Button onClick={handleSave}>Salvar</Button>
+          <Button
+            onClick={() => onDelete(event.id)}
+            style={{ backgroundColor: "#d9534f" }}
+          >
+            Excluir
+          </Button>
+          <Button onClick={onClose} style={{ backgroundColor: "#858585" }}>
             Fechar
           </Button>
         </ButtonContainer>
       </ModalContainer>
     </ModalOverlay>
-  );
+  ) : null;
 };
 
 export default ModalAberto;

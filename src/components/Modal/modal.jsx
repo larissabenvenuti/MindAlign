@@ -1,13 +1,15 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const colors = {
   primary: "#b96464",
   primaryHover: "#a15555",
   secondary: "#858585",
-  background: "#ececec",
-  text: "#000",
+  background: "#f7f7f7",
+  text: "#333",
   white: "#fff",
-  shadow: "rgba(0, 0, 0, 0.1)",
+  shadow: "rgba(0, 0, 0, 0.15)",
+  border: "#ddd",
+  inputBackground: "#fafafa",
 };
 
 export const ModalOverlay = styled.div`
@@ -21,74 +23,109 @@ export const ModalOverlay = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(0.5px);
 `;
 
 export const ModalContainer = styled.div`
   background-color: ${colors.white};
-  padding: 20px;
-  border-radius: 8px;
-  width: 400px;
-  max-width: 100%;
-  box-shadow: 0 2px 6px ${colors.shadow};
+  padding: 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 4px 10px ${colors.shadow};
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 `;
 
 export const ModalHeader = styled.h3`
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   text-align: center;
-  font-size: 1.5rem;
-  color: #333;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: ${colors.text};
 `;
 
 export const InputField = styled.input`
-  width: 90%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  text-align: left;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid ${colors.border};
+  border-radius: 6px;
   font-size: 1rem;
+  background-color: ${colors.inputBackground};
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    border-color: ${colors.primary};
+    outline: none;
+    box-shadow: 0 0 5px ${colors.primaryHover};
+  }
 `;
 
 export const TextField = styled.textarea`
-  width: 90%;
-  height: 80px;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  width: 100%;
+  height: 100px;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid ${colors.border};
+  border-radius: 6px;
   resize: vertical;
-  text-align: left;
   font-size: 1rem;
+  background-color: ${colors.inputBackground};
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    border-color: ${colors.primary};
+    outline: none;
+    box-shadow: 0 0 5px ${colors.primaryHover};
+  }
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 15px;
 `;
 
 export const Button = styled.button`
   background-color: ${colors.primary};
   color: ${colors.white};
-  margin: 0px 5px;
+  margin: 0 5px;
   border: none;
-  padding: 10px 20px;
-  font-size: 0.8rem;
-  border-radius: 5px;
+  padding: 12px 18px;
+  font-size: 0.9rem;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  font-weight: bold;
 
   &:hover {
     background-color: ${colors.primaryHover};
+    transform: scale(1.05);
   }
 
   &:focus {
     outline: none;
+    box-shadow: 0 0 5px ${colors.primaryHover};
+  }
+
+  &:disabled {
+    background-color: ${colors.secondary};
+    cursor: not-allowed;
   }
 `;
-

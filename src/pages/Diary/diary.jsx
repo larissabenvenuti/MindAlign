@@ -21,7 +21,7 @@ export const DiaryContainer = styled.div`
   padding: 20px;
   flex-direction: column;
   text-align: center;
-  background: ${colors.background}; 
+  background: ${colors.background};
 
   h1 {
     font-size: 2.2rem;
@@ -71,12 +71,13 @@ export const DiaryLabel = styled.h3`
 
 export const TextArea = styled.textarea`
   width: 90%;
-  height: 120px;
+  height: 200px;
   padding: 10px;
   font-size: 1rem;
   border-radius: 8px;
   border: 1px solid ${colors.border};
-  overflow: hidden;
+  resize: none;
+  overflow: auto;
 `;
 
 export const Button = styled.button`
@@ -90,6 +91,10 @@ export const Button = styled.button`
   transition: background-color 0.3s ease;
   &:hover {
     background-color: ${colors.primaryHover};
+  }
+  &:disabled {
+    background-color: ${colors.secondary};
+    cursor: not-allowed;
   }
 `;
 
@@ -111,22 +116,29 @@ export const EntryCard = styled.div`
   border-left: 5px solid ${colors.primary};
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  width: 100%;
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px ${colors.shadow};
+  > div {
+    flex-grow: 1;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
   }
 
   p {
     font-size: 1rem;
     margin-bottom: 10px;
     color: ${colors.text};
+    white-space: pre-wrap;
+    line-height: 1.5;
   }
 
   small {
     color: ${colors.secondary};
     font-size: 0.9rem;
+    display: block;
+    margin-top: 10px;
   }
 `;
 
@@ -141,4 +153,22 @@ export const DeleteButton = styled.button`
   &:hover {
     color: ${colors.primaryHover};
   }
+`;
+
+export const EmptyState = styled.div`
+  text-align: center;
+  font-size: 1.2rem;
+  color: ${colors.secondary};
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  background: ${colors.white};
+  box-shadow: 0 2px 5px ${colors.shadow};
+`;
+
+export const CharacterCount = styled.div`
+  text-align: right;
+  color: ${(props) => (props.isOverLimit ? "red" : colors.secondary)};
+  font-size: 0.9rem;
+  margin-top: 5px;
 `;

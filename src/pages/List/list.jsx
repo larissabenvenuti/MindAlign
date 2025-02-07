@@ -11,79 +11,21 @@ const colors = {
   border: "#ccc",
 };
 
-export const ListContainer = styled.div`
-  margin-top: 100px;
-  width: 100%;
-  min-height: 100vh;
+export const InputContainer = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 20px;
-  flex-direction: column;
-  text-align: center;
-  background: ${colors.background}; 
-  
-  h1 {
-    font-size: 2.2rem;
-    font-weight: bold;
-    margin-bottom: 25px;
-    color: ${colors.primary};
-  }
-
-  @media (max-width: 767px) {
-    margin-top: 80px;
-    padding: 10px;
-  }
-`;
-
-export const ListWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  gap: 10px;
   width: 100%;
-  max-width: 800px;
-  background: ${colors.white};
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px ${colors.shadow};
-  margin-bottom: 20px;
-  
-  .task-input {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
-  .task-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  @media (max-width: 767px) {
-    padding: 10px;
-  }
 `;
 
-export const ListLabel = styled.h3`
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 25px;
-  color: ${colors.text};
-  padding: 12px;
-  display: inline-block;
-  letter-spacing: 1px;
-  position: relative;
-`;
-
-export const ListContent = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+export const CharacterCounter = styled.span`
+  font-size: 0.9rem;
+  color: ${colors.secondary};
+  text-align: right;
 `;
 
 export const Input = styled.input`
-  width: 90%;
+  flex: 1;
   padding: 10px;
   font-size: 1rem;
   border-radius: 8px;
@@ -100,10 +42,52 @@ export const AddButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
   &:hover {
     background-color: ${colors.primaryHover};
   }
+  &:disabled {
+    background-color: ${colors.secondary};
+    cursor: not-allowed;
+  }
+`;
+
+export const ListContainer = styled.div`
+  margin-top: 100px;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-direction: column;
+  text-align: center;
+  background: ${colors.background};
+`;
+
+export const ListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 800px;
+  background: ${colors.white};
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px ${colors.shadow};
+  margin-bottom: 20px;
+`;
+
+export const ListLabel = styled.h3`
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: ${colors.text};
+`;
+
+export const ListContent = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 `;
 
 export const ListCard = styled.div`
@@ -114,20 +98,13 @@ export const ListCard = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  span {
-    font-size: 1.2rem;
-    color: ${colors.text};
-  }
 `;
 
 export const TaskItem = styled.div`
-  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
-  background-color: ${colors.white};
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 5px ${colors.shadow};
@@ -169,10 +146,6 @@ export const EmptyState = styled.div`
 `;
 
 export const DeleteButton = styled.button`
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;

@@ -24,7 +24,7 @@ export const CalendarContainer = styled.div`
 
 export const CalendarWrapper = styled.div`
   width: 100%;
-  max-width: 100%; 
+  max-width: 100%;
   padding: 0 20px;
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@ export const CalendarWrapper = styled.div`
 
 export const CalendarGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 20px;
   width: 100%;
   padding: 0 10px;
@@ -162,11 +162,9 @@ export const Today = styled.div`
   }
 
   .fc-timegrid-event {
-    background-color: ${colors.primary} !important;
-    color: ${colors.white} !important;
-    padding: 5px;
-    font-size: 0.9rem;
-    border-radius: 4px;
+    height: 100% !important;
+    display: flex;
+    align-items: stretch;
   }
 
   .fc-timegrid-event .fc-time {
@@ -180,4 +178,3 @@ export const Today = styled.div`
     outline: none !important;
   }
 `;
-

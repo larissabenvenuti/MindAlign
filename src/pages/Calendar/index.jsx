@@ -4,7 +4,13 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import ptLocale from "@fullcalendar/core/locales/pt-br";
-import { CalendarContainer, CalendarWrapper, CalendarGrid, CalendarLabel, Today } from "./calendar";
+import {
+  CalendarContainer,
+  CalendarWrapper,
+  CalendarGrid,
+  CalendarLabel,
+  Today,
+} from "./calendar";
 import Modal from "../../components/Modal";
 import ModalAberto from "../../components/Modal/modalaberto";
 
@@ -35,7 +41,7 @@ export default function Calendar() {
   };
 
   const handleEventClick = (info) => {
-    const clickedEvent = events.find(event => event.id === info.event.id);
+    const clickedEvent = events.find((event) => event.id === info.event.id);
     setSelectedEvent(clickedEvent);
     setIsModalAbertoOpen(true);
   };
@@ -50,22 +56,24 @@ export default function Calendar() {
 
     const updatedEvent = {
       ...newEvent,
-      start: startDate, 
-      end: endDate      
+      start: startDate,
+      end: endDate,
     };
 
     if (newEvent.id) {
-      setEvents(prevEvents => prevEvents.map(event =>
-        event.id === newEvent.id ? updatedEvent : event
-      ));
+      setEvents((prevEvents) =>
+        prevEvents.map((event) =>
+          event.id === newEvent.id ? updatedEvent : event
+        )
+      );
     } else {
       const newEventWithId = { ...updatedEvent, id: Date.now().toString() };
-      setEvents(prevEvents => [...prevEvents, newEventWithId]);
+      setEvents((prevEvents) => [...prevEvents, newEventWithId]);
     }
   };
 
   const handleDeleteEvent = (id) => {
-    const updatedEvents = events.filter(event => event.id !== id);
+    const updatedEvents = events.filter((event) => event.id !== id);
     setEvents(updatedEvents);
     setIsModalAbertoOpen(false);
   };
@@ -118,17 +126,27 @@ export default function Calendar() {
                 }}
                 editable={false}
                 selectable={true}
-                events={events.map(event => ({
+                events={events.map((event) => ({
                   ...event,
-                  start: event.start instanceof Date ? event.start : new Date(event.start),
-                  end: event.end instanceof Date ? event.end : new Date(event.end),
+                  start: new Date(event.start),
+                  end: new Date(event.end),
+                  allDay: false,
+                  display: "block",
                 }))}
                 dateClick={handleDateClick}
                 eventClick={handleEventClick}
                 allDaySlot={false}
                 slotDuration="00:30:00"
-                slotLabelFormat={{ hour: '2-digit', minute: '2-digit', hour12: false }}
-                eventTimeFormat={{ hour: '2-digit', minute: '2-digit', hour12: false }}
+                slotLabelFormat={{
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                }}
+                eventTimeFormat={{
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                }}
               />
             </Today>
           </div>

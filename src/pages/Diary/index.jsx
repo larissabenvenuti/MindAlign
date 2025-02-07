@@ -9,38 +9,37 @@ import {
   DeleteButton,
   DiaryLabel,
   TextAndButton,
+  EmptyState,
+  CharacterCount,
 } from "./diary";
 import { FaTrash } from "react-icons/fa";
 
 export default function Diary() {
-  const [entries, setEntries] = useState([]);
+  const [entries, setEntries] = useState(() => {
+    const savedEntries = localStorage.getItem("diaryEntries");
+    return savedEntries ? JSON.parse(savedEntries) : [];
+  });
   const [text, setText] = useState("");
+  const MAX_CHARACTERS = 500;
 
   useEffect(() => {
-    const storedEntries = localStorage.getItem("diaryEntries");
-    if (storedEntries) {
-      setEntries(JSON.parse(storedEntries));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (entries.length > 0) {
-      localStorage.setItem("diaryEntries", JSON.stringify(entries));
-    }
+    localStorage.setItem("diaryEntries", JSON.stringify(entries));
   }, [entries]);
 
   const handleAddEntry = () => {
-    if (text.trim() !== "") {
-      const newEntry = { text, date: new Date().toLocaleDateString() };
-      const updatedEntries = [newEntry, ...entries];
-      setEntries(updatedEntries);
+    const trimmedText = text.trim();
+    if (trimmedText !== "" && trimmedText.length <= MAX_CHARACTERS) {
+      const newEntry = {
+        text: trimmedText,
+        date: new Date().toLocaleDateString(),
+      };
+      setEntries([newEntry, ...entries]);
       setText("");
     }
   };
 
   const handleDeleteEntry = (index) => {
-    const updatedEntries = entries.filter((_, i) => i !== index);
-    setEntries(updatedEntries);
+    setEntries(entries.filter((_, i) => i !== index));
   };
 
   return (
@@ -48,27 +47,46 @@ export default function Diary() {
       <DiaryLabel>📖 Meu Diário</DiaryLabel>
       <EntryForm>
         <TextAndButton>
-        <TextArea
-          placeholder="Escreva seu pensamento..."
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
-        <Button onClick={handleAddEntry}>Adicionar</Button>
+          <TextArea
+            placeholder="Escreva seu pensamento..."
+            value={text}
+            onChange={(e) => {
+              if (e.target.value.length <= MAX_CHARACTERS) {
+                setText(e.target.value);
+              }
+            }}
+          />
+          <Button
+            onClick={handleAddEntry}
+            disabled={
+              text.trim().length === 0 || text.trim().length > MAX_CHARACTERS
+            }
+          >
+            Adicionar
+          </Button>
         </TextAndButton>
-      <EntryList>
-        {entries.map((entry, index) => (
-          <EntryCard key={index}>
-            <div>
-              <p>{entry.text}</p>
-              <small>{entry.date}</small>
-            </div>
-            <DeleteButton onClick={() => handleDeleteEntry(index)}>
-              <FaTrash />
-            </DeleteButton>
-          </EntryCard>
-        ))}
-      </EntryList>
+        <CharacterCount isOverLimit={text.trim().length > MAX_CHARACTERS}>
+          {text.trim().length}/{MAX_CHARACTERS} caracteres
+        </CharacterCount>
       </EntryForm>
+
+      <EntryList>
+        {entries.length === 0 ? (
+          <EmptyState>🎉 Sem entradas ainda. Comece a escrever!</EmptyState>
+        ) : (
+          entries.map((entry, index) => (
+            <EntryCard key={index}>
+              <div>
+                <p>{entry.text}</p>
+                <small>{entry.date}</small>
+              </div>
+              <DeleteButton onClick={() => handleDeleteEntry(index)}>
+                <FaTrash />
+              </DeleteButton>
+            </EntryCard>
+          ))
+        )}
+      </EntryList>
     </DiaryContainer>
   );
 }

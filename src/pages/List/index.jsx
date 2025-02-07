@@ -6,98 +6,93 @@ import {
   ListCard,
   ListContent,
   AddButton,
+  InputContainer,
   Input,
   TaskItem,
   Checkbox,
   TaskCounter,
   EmptyState,
   DeleteButton,
+  CharacterCounter,
 } from "./list";
 import { FaTrash } from "react-icons/fa";
 
 export default function List() {
-  const [tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    const savedTasks = localStorage.getItem("tasks");
-    if (savedTasks) {
-      setTasks(JSON.parse(savedTasks));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (tasks.length > 0) {
-      localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
-  }, [tasks]);
-
+  const MAX_CHARACTERS = 80;
+  const [tasks, setTasks] = useState(
+    () => JSON.parse(localStorage.getItem("tasks")) || []
+  );
   const [newTask, setNewTask] = useState("");
 
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
   const handleAddTask = () => {
-    if (newTask.trim()) {
-      const updatedTasks = [...tasks, { text: newTask, completed: false }];
-      setTasks(updatedTasks);
-      setNewTask("");
-    }
+    if (!newTask.trim()) return;
+    setTasks([...tasks, { text: newTask.trim(), completed: false }]);
+    setNewTask("");
   };
 
   const handleToggleTask = (index) => {
-    const updatedTasks = tasks.map((task, i) =>
-      i === index ? { ...task, completed: !task.completed } : task
+    setTasks(
+      tasks.map((task, i) =>
+        i === index ? { ...task, completed: !task.completed } : task
+      )
     );
-    setTasks(updatedTasks);
   };
 
   const handleDeleteTask = (index) => {
-    const updatedTasks = tasks.filter((_, i) => i !== index);
-    setTasks(updatedTasks);
+    setTasks(tasks.filter((_, i) => i !== index));
   };
-
-  const completedTasks = tasks.filter((task) => task.completed).length;
-  const totalTasks = tasks.length;
 
   return (
     <ListContainer>
       <ListLabel>📋 Minha Lista de Tarefas</ListLabel>
       <ListWrapper>
         <ListContent>
-          <div className="task-input">
+          <InputContainer>
             <Input
               type="text"
               value={newTask}
-              onChange={(e) => setNewTask(e.target.value)}
+              onChange={(e) =>
+                setNewTask(e.target.value.slice(0, MAX_CHARACTERS))
+              }
+              maxLength={MAX_CHARACTERS}
               placeholder="Adicione uma nova tarefa..."
             />
-            <AddButton onClick={handleAddTask}>Adicionar</AddButton>
-          </div>
-          {totalTasks === 0 ? (
+            <AddButton onClick={handleAddTask} disabled={!newTask.trim()}>
+              Adicionar
+            </AddButton>
+          </InputContainer>
+          <CharacterCounter>
+            {newTask.length}/{MAX_CHARACTERS} caracteres
+          </CharacterCounter>
+          <TaskCounter>
+            Concluídas:{" "}
+            <span>{tasks.filter((task) => task.completed).length}</span> /{" "}
+            <span>{tasks.length}</span>
+          </TaskCounter>
+          {tasks.length > 0 ? (
+            tasks.map((task, index) => (
+              <ListCard key={index}>
+                <TaskItem completed={task.completed}>
+                  <Checkbox
+                    type="checkbox"
+                    checked={task.completed}
+                    onChange={() => handleToggleTask(index)}
+                  />
+                  <span>{task.text}</span>
+                  <DeleteButton onClick={() => handleDeleteTask(index)}>
+                    <FaTrash />
+                  </DeleteButton>
+                </TaskItem>
+              </ListCard>
+            ))
+          ) : (
             <EmptyState>
               🎉 Nenhuma tarefa pendente! Adicione uma nova.
             </EmptyState>
-          ) : (
-            <>
-              <TaskCounter>
-                Concluídas: <span>{completedTasks}</span> /{" "}
-                <span>{totalTasks}</span>
-              </TaskCounter>
-              <div className="task-list">
-                {tasks.map((task, index) => (
-                  <ListCard key={index}>
-                    <TaskItem completed={task.completed}>
-                      <Checkbox
-                        type="checkbox"
-                        checked={task.completed}
-                        onChange={() => handleToggleTask(index)}
-                      />
-                      <span>{task.text}</span>
-                      <DeleteButton onClick={() => handleDeleteTask(index)}>
-                        <FaTrash />
-                      </DeleteButton>
-                    </TaskItem>
-                  </ListCard>
-                ))}
-              </div>
-            </>
           )}
         </ListContent>
       </ListWrapper>

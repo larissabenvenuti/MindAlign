@@ -21,7 +21,7 @@ export const HomeContainer = styled.div`
   padding: 0 20px;
   position: relative;
   overflow: hidden;
-  background: ${colors.background}; 
+  background: ${colors.background};
 `;
 
 export const CardsContainer = styled.div`
@@ -38,12 +38,12 @@ export const CardsContainer = styled.div`
 `;
 
 export const Card = styled.div`
-  background: ${colors.white}; 
+  background: ${colors.white};
   border-radius: 15px;
   padding: 25px;
   width: 260px;
   text-align: center;
-  box-shadow: 0 4px 20px ${colors.shadow}; 
+  box-shadow: 0 4px 20px ${colors.shadow};
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   transform: scale(1);
@@ -56,15 +56,15 @@ export const Card = styled.div`
 
   h2 {
     margin-bottom: 15px;
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     font-weight: 600;
     color: ${colors.primary};
-    line-height: 1.4;
+    line-height: 1.5;
   }
 
   p {
     font-size: 1rem;
-    color: ${colors.secondary};
+    color: ${colors.text};
     line-height: 1.6;
     font-weight: 400;
   }
