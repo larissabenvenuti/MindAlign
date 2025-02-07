@@ -14,7 +14,7 @@ export default function Home() {
           <p>Organize seus eventos e compromissos.</p>
         </Card>
         <Card onClick={() => navigate("/list")}>
-          <h2>📋 Lista</h2>
+          <h2>📋 Lista de Tarefas</h2>
           <p>Crie e gerencie suas tarefas.</p>
         </Card>
         <Card onClick={() => navigate("/diary")}>

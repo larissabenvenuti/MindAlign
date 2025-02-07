@@ -72,7 +72,7 @@ export default function Diary() {
 
       <EntryList>
         {entries.length === 0 ? (
-          <EmptyState>🎉 Sem entradas ainda. Comece a escrever!</EmptyState>
+          <EmptyState>🎉 Sem anotações ainda. Comece a escrever!</EmptyState>
         ) : (
           entries.map((entry, index) => (
             <EntryCard key={index}>
