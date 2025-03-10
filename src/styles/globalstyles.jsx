@@ -1,15 +1,15 @@
 import { createGlobalStyle } from "styled-components";
 
 const colors = {
-    primary: "#b96464",
-    primaryHover: "#a15555",
-    secondary: "#858585",
-    background: "#ececec",
-    text: "#000",
-    white: "#fff",
-    shadow: "rgba(0, 0, 0, 0.1)",
-    border: "#ccc",
-  };
+  primary: "#b96464",
+  primaryHover: "#a15555",
+  secondary: "#858585",
+  background: "#ececec",
+  text: "#000",
+  white: "#fff",
+  shadow: "rgba(0, 0, 0, 0.1)",
+  border: "#ccc",
+};
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -19,7 +19,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    font-family: serif;
+    font-family: "Quicksand", sans-serif;
     background-color: ${colors.background};
   }
 

@@ -103,6 +103,7 @@ export const ListCard = styled.div`
 export const TaskItem = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   width: 100%;
   padding: 10px;

@@ -77,12 +77,21 @@ export default function List() {
             tasks.map((task, index) => (
               <ListCard key={index}>
                 <TaskItem completed={task.completed}>
-                  <Checkbox
-                    type="checkbox"
-                    checked={task.completed}
-                    onChange={() => handleToggleTask(index)}
-                  />
-                  <span>{task.text}</span>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      flex: 1,
+                    }}
+                  >
+                    <Checkbox
+                      type="checkbox"
+                      checked={task.completed}
+                      onChange={() => handleToggleTask(index)}
+                    />
+                    <span>{task.text}</span>
+                  </div>
                   <DeleteButton onClick={() => handleDeleteTask(index)}>
                     <FaTrash />
                   </DeleteButton>

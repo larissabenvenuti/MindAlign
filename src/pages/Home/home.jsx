@@ -18,7 +18,7 @@ export const HomeContainer = styled.div`
   justify-content: center;
   height: 100vh;
   text-align: center;
-  padding: 0 20px;
+  padding: 0 40px;
   position: relative;
   overflow: hidden;
   background: ${colors.background};
@@ -50,7 +50,7 @@ export const Card = styled.div`
   overflow: hidden;
 
   &:hover {
-    transform: scale(1.05) translateY(-5px);
+    transform: scale(0.95) translateY(-5px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
   }
 
