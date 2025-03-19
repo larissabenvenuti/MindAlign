@@ -1,52 +1,58 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { FaTrash } from "react-icons/fa";
 import {
   DiaryContainer,
-  EntryForm,
-  EntryList,
-  EntryCard,
+  DiaryWrapper,
+  TitleSection,
+  CardsContainer,
+  Card,
+  TextAreaWrapper,
   TextArea,
-  Button,
+  AddButton,
   DeleteButton,
-  DiaryLabel,
-  TextAndButton,
   EmptyState,
   CharacterCount,
 } from "./diary";
-import { FaTrash } from "react-icons/fa";
+
+const MAX_CHARACTERS = 500;
 
 export default function Diary() {
-  const [entries, setEntries] = useState(() => {
+  const storedEntries = useMemo(() => {
     const savedEntries = localStorage.getItem("diaryEntries");
     return savedEntries ? JSON.parse(savedEntries) : [];
-  });
+  }, []);
+
+  const [entries, setEntries] = useState(storedEntries);
   const [text, setText] = useState("");
-  const MAX_CHARACTERS = 500;
 
   useEffect(() => {
     localStorage.setItem("diaryEntries", JSON.stringify(entries));
   }, [entries]);
 
-  const handleAddEntry = () => {
+  const handleAddEntry = useCallback(() => {
     const trimmedText = text.trim();
-    if (trimmedText !== "" && trimmedText.length <= MAX_CHARACTERS) {
-      const newEntry = {
-        text: trimmedText,
-        date: new Date().toLocaleDateString(),
-      };
-      setEntries([newEntry, ...entries]);
+    if (trimmedText && trimmedText.length <= MAX_CHARACTERS) {
+      setEntries((prev) => [
+        { text: trimmedText, date: new Date().toLocaleDateString() },
+        ...prev,
+      ]);
       setText("");
     }
-  };
+  }, [text]);
 
-  const handleDeleteEntry = (index) => {
-    setEntries(entries.filter((_, i) => i !== index));
-  };
+  const handleDeleteEntry = useCallback((index) => {
+    setEntries((prevEntries) => prevEntries.filter((_, i) => i !== index));
+  }, []);
 
   return (
     <DiaryContainer>
-      <DiaryLabel>📖 Meu Diário</DiaryLabel>
-      <EntryForm>
-        <TextAndButton>
+      <TitleSection>
+        <h1>📖 Meu Diário</h1>
+        <p>Registre seus pensamentos e reflexões do dia.</p>
+      </TitleSection>
+      <DiaryWrapper>
+        <CardsContainer>
+          <TextAreaWrapper>
           <TextArea
             placeholder="Escreva seu pensamento..."
             value={text}
@@ -56,37 +62,34 @@ export default function Diary() {
               }
             }}
           />
-          <Button
+          <AddButton
             onClick={handleAddEntry}
-            disabled={
-              text.trim().length === 0 || text.trim().length > MAX_CHARACTERS
-            }
+            disabled={!text.trim() || text.trim().length > MAX_CHARACTERS}
           >
             Adicionar
-          </Button>
-        </TextAndButton>
-        <CharacterCount isOverLimit={text.trim().length > MAX_CHARACTERS}>
-          {text.trim().length}/{MAX_CHARACTERS} caracteres
-        </CharacterCount>
-      </EntryForm>
+          </AddButton>
+          </TextAreaWrapper>
+          <CharacterCount isOverLimit={text.length > MAX_CHARACTERS}>
+            {text.length}/{MAX_CHARACTERS} caracteres
+          </CharacterCount>
 
-      <EntryList>
-        {entries.length === 0 ? (
-          <EmptyState>🎉 Sem anotações ainda. Comece a escrever!</EmptyState>
-        ) : (
-          entries.map((entry, index) => (
-            <EntryCard key={index}>
-              <div>
-                <p>{entry.text}</p>
-                <small>{entry.date}</small>
-              </div>
-              <DeleteButton onClick={() => handleDeleteEntry(index)}>
-                <FaTrash />
-              </DeleteButton>
-            </EntryCard>
-          ))
-        )}
-      </EntryList>
+          {entries.length === 0 ? (
+            <EmptyState>Sem anotações ainda. Comece a escrever!</EmptyState>
+          ) : (
+            entries.map((entry, index) => (
+              <Card key={index}>
+                <div>
+                  <p>{entry.text}</p>
+                  <small>{entry.date}</small>
+                </div>
+                <DeleteButton onClick={() => handleDeleteEntry(index)}>
+                  <FaTrash />
+                </DeleteButton>
+              </Card>
+            ))
+          )}
+        </CardsContainer>
+      </DiaryWrapper>
     </DiaryContainer>
   );
 }

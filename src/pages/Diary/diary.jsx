@@ -1,144 +1,223 @@
 import styled from "styled-components";
 
 const colors = {
-  primary: "#b96464",
-  primaryHover: "#a15555",
-  secondary: "#858585",
-  background: "#ececec",
-  text: "#000",
-  white: "#fff",
-  shadow: "rgba(0, 0, 0, 0.1)",
-  border: "#ccc",
+  primary: "#5D8A8E",       
+  primaryHover: "#4F7772",  
+  secondary: "#A1B3B0",    
+  background: "#F4F6F5",    
+  text: "#333333",          
+  white: "#FFFFFF",          
+  shadow: "rgba(0, 0, 0, 0.1)", 
+  border: "#D6CFC7",        
+  accent: "#F2C77B"      
 };
 
 export const DiaryContainer = styled.div`
-  margin-top: 100px;
-  width: 100%;
-  min-height: 100vh;
   display: flex;
+  flex-direction: column;
+  gap: 40px;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
+  background-color: ${colors.background};
+  color: ${colors.text};
   padding: 20px;
-  flex-direction: column;
-  text-align: center;
-  background: ${colors.background};
 
-  h1 {
-    font-size: 2.2rem;
-    font-weight: bold;
-    margin-bottom: 25px;
-    color: ${colors.primary};
-  }
-
-  @media (max-width: 767px) {
-    margin-top: 80px;
-    padding: 10px;
+  @media (max-width: 1024px) {
+    gap: 20px;
   }
 `;
 
-export const EntryForm = styled.div`
+export const DiaryWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: 800px;
   background: ${colors.white};
   padding: 20px;
-  gap: 15px;
   border-radius: 10px;
   box-shadow: 0 4px 10px ${colors.shadow};
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
 `;
 
-export const TextAndButton = styled.div`
+export const TitleSection = styled.div`
+  text-align: center;
+
+  h1 {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: ${colors.primaryHover};
+  }
+
+  p {
+    font-size: 0.8rem;
+    color: ${colors.secondary};
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 0.7rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.3rem;
+    }
+
+    p {
+      font-size: 0.6rem;
+    }
+  }
+`;
+
+export const CardsContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  background: ${colors.white};
+  flex-direction: column;
   gap: 15px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+  width: 100%;
 `;
 
-export const DiaryLabel = styled.h3`
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 25px;
-  color: ${colors.text};
-  padding: 12px;
-  display: inline-block;
-  letter-spacing: 1px;
-  position: relative;
+export const Card = styled.div`
+  padding: 15px;
+  background-color: ${colors.white};
+  border-radius: 5px;
+  box-shadow: 0 2px 5px ${colors.shadow};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  transition: 0.3s ease-in-out;
+  overflow: hidden;
+  word-break: break-word;
+  text-overflow: ellipsis;
+
+  &:hover {
+    box-shadow: 0px 4px 12px ${colors.shadow};
+    transform: translateY(-2px);
+  }
+
+  p {
+    font-size: 1rem;
+    color: ${colors.text};
+    word-wrap: break-word;
+  }
+
+  small {
+    font-size: 0.8rem;
+    color: ${colors.secondary};
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
+`;
+
+export const TextAreaWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 5px;
+  }
 `;
 
 export const TextArea = styled.textarea`
-  width: 90%;
-  height: 200px;
+  width: 100%;
+  height: 120px;
   padding: 10px;
   font-size: 1rem;
   border-radius: 8px;
   border: 1px solid ${colors.border};
   resize: none;
-  overflow: auto;
+  outline: none;
+  background: ${colors.white};
+  transition: border 0.3s ease;
+
+  &:focus {
+    border-color: ${colors.primary};
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    height: 100px;
+  }
 `;
 
-export const Button = styled.button`
+export const AddButton = styled.button`
   padding: 10px;
   font-size: 1rem;
-  background-color: ${colors.primary};
+  background-color: ${colors.accent};
   color: ${colors.white};
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+
   &:hover {
     background-color: ${colors.primaryHover};
   }
+
   &:disabled {
     background-color: ${colors.secondary};
     cursor: not-allowed;
   }
-`;
 
-export const EntryList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
-  max-width: 800px;
-`;
-
-export const EntryCard = styled.div`
-  background: ${colors.white};
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px ${colors.shadow};
-  text-align: left;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-left: 5px solid ${colors.primary};
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
-
-  > div {
-    flex-grow: 1;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    word-break: break-word;
-  }
-
-  p {
-    font-size: 1rem;
-    margin-bottom: 10px;
-    color: ${colors.text};
-    white-space: pre-wrap;
-    line-height: 1.5;
-  }
-
-  small {
-    color: ${colors.secondary};
+  @media (max-width: 768px) {
     font-size: 0.9rem;
-    display: block;
-    margin-top: 10px;
+    padding: 8px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+`;
+
+export const EmptyState = styled.div`
+  text-align: center;
+  font-size: 1.2rem;
+  color: ${colors.secondary};
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 5px;
+  background: ${colors.white};
+  box-shadow: 0 2px 5px ${colors.shadow};
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    font-size: 0.9rem;
   }
 `;
 
@@ -153,17 +232,14 @@ export const DeleteButton = styled.button`
   &:hover {
     color: ${colors.primaryHover};
   }
-`;
 
-export const EmptyState = styled.div`
-  text-align: center;
-  font-size: 1.2rem;
-  color: ${colors.secondary};
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 8px;
-  background: ${colors.white};
-  box-shadow: 0 2px 5px ${colors.shadow};
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 `;
 
 export const CharacterCount = styled.div`
@@ -171,4 +247,12 @@ export const CharacterCount = styled.div`
   color: ${(props) => (props.isOverLimit ? "red" : colors.secondary)};
   font-size: 0.9rem;
   margin-top: 5px;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+  }
 `;

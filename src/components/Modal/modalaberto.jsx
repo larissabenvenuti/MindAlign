@@ -11,11 +11,14 @@ import {
 
 const ModalAberto = ({ isOpen, onClose, eventDetails, onSave, onDelete }) => {
   const [event, setEvent] = useState({});
+  const [originalEventDate, setOriginalEventDate] = useState(null);
 
   useEffect(() => {
     if (eventDetails) {
       const startTime = new Date(eventDetails.start);
       const endTime = new Date(eventDetails.end);
+
+      setOriginalEventDate(startTime);
 
       setEvent({
         ...eventDetails,
@@ -35,12 +38,8 @@ const ModalAberto = ({ isOpen, onClose, eventDetails, onSave, onDelete }) => {
       return;
     }
 
-    const startDateTime = new Date(
-      event.start instanceof Date ? event.start : new Date()
-    );
-    const endDateTime = new Date(
-      event.end instanceof Date ? event.end : new Date()
-    );
+    const startDateTime = new Date(originalEventDate);
+    const endDateTime = new Date(originalEventDate);
 
     const [startHour, startMinute] = event.start.split(":").map(Number);
     const [endHour, endMinute] = event.end.split(":").map(Number);

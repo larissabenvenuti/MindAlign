@@ -4,7 +4,11 @@ import { HeaderContainer, Title } from "./header";
 export default function Header() {
   return (
     <HeaderContainer>
-      <Title>Your Planner</Title>
+      <Title>
+        <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+          MindAlign
+        </a>
+      </Title>
     </HeaderContainer>
   );
 }

@@ -14,20 +14,26 @@ const Modal = ({ isOpen, onClose, onSave, currentDate, existingEvent }) => {
   const [description, setDescription] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [eventDate, setEventDate] = useState(null);
   const [validationErrors, setValidationErrors] = useState({
     general: "",
     timeError: "",
   });
 
   useEffect(() => {
-    if (existingEvent) {
-      const event = existingEvent[0] || {};
+    if (existingEvent && existingEvent[0]) {
+      const event = existingEvent[0];
+      const originalDate = new Date(event.start);
+
       setTitle(event.title || "");
       setDescription(event.description || "");
       setStartTime(
-        event.start ? event.start.split("T")[1].substring(0, 5) : ""
+        event.start ? new Date(event.start).toTimeString().substring(0, 5) : ""
       );
-      setEndTime(event.end ? event.end.split("T")[1].substring(0, 5) : "");
+      setEndTime(
+        event.end ? new Date(event.end).toTimeString().substring(0, 5) : ""
+      );
+      setEventDate(originalDate);
     } else {
       const clickTime =
         currentDate instanceof Date
@@ -38,6 +44,7 @@ const Modal = ({ isOpen, onClose, onSave, currentDate, existingEvent }) => {
       setDescription("");
       setStartTime(clickTime);
       setEndTime("");
+      setEventDate(currentDate instanceof Date ? currentDate : new Date());
     }
     setValidationErrors({ general: "", timeError: "" });
   }, [existingEvent, isOpen, currentDate]);
@@ -67,18 +74,24 @@ const Modal = ({ isOpen, onClose, onSave, currentDate, existingEvent }) => {
       }
     }
 
+    const dateToUse = new Date(eventDate);
+    const [startHours, startMinutes] = startTime.split(":").map(Number);
+    const startDateTime = new Date(dateToUse);
+    startDateTime.setHours(startHours, startMinutes, 0, 0);
+
+    let endDateTime = null;
+    if (endTime) {
+      const [endHours, endMinutes] = endTime.split(":").map(Number);
+      endDateTime = new Date(dateToUse);
+      endDateTime.setHours(endHours, endMinutes, 0, 0);
+    }
+
     const newEvent = {
       id: existingEvent?.[0]?.id || null,
       title,
       description,
-      start: new Date(currentDate).setHours(
-        ...startTime.split(":").map((time) => parseInt(time))
-      ),
-      end: endTime
-        ? new Date(currentDate).setHours(
-            ...endTime.split(":").map((time) => parseInt(time))
-          )
-        : null,
+      start: startDateTime.toISOString(),
+      end: endDateTime ? endDateTime.toISOString() : null,
     };
 
     onSave(newEvent);

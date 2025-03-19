@@ -7,6 +7,7 @@ import List from "./pages/List";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import GlobalStyles from "./styles/globalstyles";
+import HabitTracker from "./pages/HabitTracker";
 
 const App = () => {
   return (
@@ -17,8 +18,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/calendar" element={<Calendar />} />
-          <Route path="/diary" element={<Diary />} />
           <Route path="/list" element={<List />} />
+          <Route path="/diary" element={<Diary />} />
+          <Route path="/habittracker" element={<HabitTracker />} />
         </Routes>
       </div>
       <Footer />

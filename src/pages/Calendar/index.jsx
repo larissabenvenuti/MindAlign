@@ -8,7 +8,7 @@ import {
   CalendarContainer,
   CalendarWrapper,
   CalendarGrid,
-  CalendarLabel,
+  TitleSection,
   Today,
 } from "./calendar";
 import Modal from "../../components/Modal";
@@ -31,6 +31,8 @@ export default function Calendar() {
   useEffect(() => {
     if (events.length > 0) {
       localStorage.setItem("calendarEvents", JSON.stringify(events));
+    } else {
+      localStorage.removeItem("calendarEvents");
     }
   }, [events]);
 
@@ -75,6 +77,9 @@ export default function Calendar() {
   const handleDeleteEvent = (id) => {
     const updatedEvents = events.filter((event) => event.id !== id);
     setEvents(updatedEvents);
+
+    localStorage.setItem("calendarEvents", JSON.stringify(updatedEvents));
+
     setIsModalAbertoOpen(false);
   };
 
@@ -93,7 +98,7 @@ export default function Calendar() {
       <CalendarWrapper>
         <CalendarGrid>
           <div>
-            <CalendarLabel>📆 Calendário Mensal: </CalendarLabel>
+            <TitleSection><h1>📆 Meu Calendário Mensal:  </h1></TitleSection>
             <Today>
               <FullCalendar
                 plugins={[dayGridPlugin, interactionPlugin]}
@@ -113,7 +118,7 @@ export default function Calendar() {
             </Today>
           </div>
           <div>
-            <CalendarLabel>📅 Calendário Diário: </CalendarLabel>
+            <TitleSection><h1>📅 Meu Calendário Diário: </h1></TitleSection>
             <Today>
               <FullCalendar
                 plugins={[timeGridPlugin, interactionPlugin]}

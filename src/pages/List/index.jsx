@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   ListContainer,
   ListWrapper,
-  ListLabel,
+  TitleSection,
   ListCard,
   ListContent,
   AddButton,
@@ -30,25 +30,33 @@ export default function List() {
 
   const handleAddTask = () => {
     if (!newTask.trim()) return;
-    setTasks([...tasks, { text: newTask.trim(), completed: false }]);
+    const newTaskObject = {
+      text: newTask.trim(),
+      completed: false,
+      id: Date.now(),
+    };
+    setTasks((prevTasks) => [...prevTasks, newTaskObject]);
     setNewTask("");
   };
 
-  const handleToggleTask = (index) => {
+  const handleToggleTask = (id) => {
     setTasks(
-      tasks.map((task, i) =>
-        i === index ? { ...task, completed: !task.completed } : task
+      tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
       )
     );
   };
 
-  const handleDeleteTask = (index) => {
-    setTasks(tasks.filter((_, i) => i !== index));
+  const handleDeleteTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
   };
 
   return (
     <ListContainer>
-      <ListLabel>📋 Minha Lista de Tarefas</ListLabel>
+      <TitleSection>
+        <h1>📋 Minha Lista de Tarefas</h1>
+        <p>Anote suas tarefas e marque-as como concluídas quando desejar.</p>
+      </TitleSection>
       <ListWrapper>
         <ListContent>
           <InputContainer>
@@ -74,9 +82,9 @@ export default function List() {
             <span>{tasks.length}</span>
           </TaskCounter>
           {tasks.length > 0 ? (
-            tasks.map((task, index) => (
-              <ListCard key={index}>
-                <TaskItem completed={task.completed}>
+            tasks.map(({ id, text, completed }) => (
+              <ListCard key={id}>
+                <TaskItem completed={completed}>
                   <div
                     style={{
                       display: "flex",
@@ -87,21 +95,22 @@ export default function List() {
                   >
                     <Checkbox
                       type="checkbox"
-                      checked={task.completed}
-                      onChange={() => handleToggleTask(index)}
+                      checked={completed}
+                      onChange={() => handleToggleTask(id)}
+                      aria-label={`Marcar tarefa ${text} como ${
+                        completed ? "não concluída" : "concluída"
+                      }`}
                     />
-                    <span>{task.text}</span>
+                    <span>{text}</span>
                   </div>
-                  <DeleteButton onClick={() => handleDeleteTask(index)}>
+                  <DeleteButton onClick={() => handleDeleteTask(id)}>
                     <FaTrash />
                   </DeleteButton>
                 </TaskItem>
               </ListCard>
             ))
           ) : (
-            <EmptyState>
-              🎉 Nenhuma tarefa pendente! Adicione uma nova.
-            </EmptyState>
+            <EmptyState>Nenhuma tarefa pendente! Adicione uma nova.</EmptyState>
           )}
         </ListContent>
       </ListWrapper>

@@ -1,15 +1,90 @@
 import styled from "styled-components";
 
 const colors = {
-  primary: "#b96464",
-  primaryHover: "#a15555",
-  secondary: "#858585",
-  background: "#ececec",
-  text: "#000",
-  white: "#fff",
-  shadow: "rgba(0, 0, 0, 0.1)",
-  border: "#ccc",
+  primary: "#5D8A8E",       
+  primaryHover: "#4F7772",  
+  secondary: "#A1B3B0",    
+  background: "#F4F6F5",    
+  text: "#333333",          
+  white: "#FFFFFF",          
+  shadow: "rgba(0, 0, 0, 0.1)", 
+  border: "#D6CFC7",        
+  accent: "#F2C77B"      
 };
+
+
+export const ListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: ${colors.background};
+  color: ${colors.text};
+  padding: 20px;
+
+  @media (max-width: 1024px) {
+    gap: 20px;
+  }
+`;
+
+export const ListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 800px;
+  background: ${colors.white};
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px ${colors.shadow};
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
+`;
+
+export const TitleSection = styled.div`
+  text-align: center;
+
+  h1 {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: ${colors.primaryHover};
+  }
+
+  p {
+    font-size: 0.8rem;
+    color: ${colors.secondary};
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 0.7rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.3rem;
+    }
+
+
+    p {
+      font-size: 0.6rem;
+    }
+  }
+`;
 
 export const InputContainer = styled.div`
   display: flex;
@@ -31,56 +106,45 @@ export const Input = styled.input`
   border-radius: 8px;
   border: 1px solid ${colors.border};
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
 `;
 
 export const AddButton = styled.button`
   padding: 10px;
   font-size: 1rem;
-  background-color: ${colors.primary};
+  background-color: ${colors.accent};
   color: ${colors.white};
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+
   &:hover {
     background-color: ${colors.primaryHover};
   }
+
   &:disabled {
     background-color: ${colors.secondary};
     cursor: not-allowed;
   }
-`;
 
-export const ListContainer = styled.div`
-  margin-top: 100px;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  flex-direction: column;
-  text-align: center;
-  background: ${colors.background};
-`;
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
 
-export const ListWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 800px;
-  background: ${colors.white};
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px ${colors.shadow};
-  margin-bottom: 20px;
-`;
-
-export const ListLabel = styled.h3`
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 25px;
-  color: ${colors.text};
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
 `;
 
 export const ListContent = styled.div`
@@ -88,6 +152,10 @@ export const ListContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
 `;
 
 export const ListCard = styled.div`
@@ -98,22 +166,41 @@ export const ListCard = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px;
+  }
 `;
 
 export const TaskItem = styled.div`
   display: flex;
-  align-items: center;
+  align-items: left;
   justify-content: space-between;
   gap: 10px;
   width: 100%;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 5px ${colors.shadow};
-
+  position: relative;
+  overflow: hidden;
+  word-break: break-word;
+  text-overflow: ellipsis;
+  
   span {
     text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
     color: ${(props) => (props.completed ? colors.secondary : colors.text)};
-    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    padding: 8px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 6px;
   }
 `;
 
@@ -134,6 +221,14 @@ export const TaskCounter = styled.p`
     font-weight: bold;
     color: ${colors.primary};
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 `;
 
 export const EmptyState = styled.div`
@@ -145,6 +240,16 @@ export const EmptyState = styled.div`
   border-radius: 5px;
   background: ${colors.white};
   box-shadow: 0 2px 5px ${colors.shadow};
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
 `;
 
 export const DeleteButton = styled.button`
@@ -157,5 +262,13 @@ export const DeleteButton = styled.button`
 
   &:hover {
     color: ${colors.primaryHover};
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
   }
 `;

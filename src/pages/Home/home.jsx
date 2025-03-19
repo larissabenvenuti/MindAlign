@@ -1,76 +1,86 @@
 import styled from "styled-components";
 
 const colors = {
-  primary: "#b96464",
-  primaryHover: "#a15555",
-  secondary: "#858585",
-  background: "#ececec",
-  text: "#000",
-  white: "#fff",
-  shadow: "rgba(0, 0, 0, 0.1)",
-  border: "#ccc",
+  primary: "#5D8A8E",       
+  primaryHover: "#4F7772",  
+  secondary: "#A1B3B0",    
+  background: "#F4F6F5",    
+  text: "#333333",          
+  white: "#FFFFFF",          
+  shadow: "rgba(0, 0, 0, 0.1)", 
+  border: "#D6CFC7",        
+  accent: "#F2C77B"      
 };
 
 export const HomeContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 100vh;
-  text-align: center;
-  padding: 0 40px;
-  position: relative;
-  overflow: hidden;
-  background: ${colors.background};
+  align-items: center;
+  min-height: 100vh;
+  background-color: ${colors.background};
+  color: ${colors.text};
+  padding: 40px;
+`;
+
+export const ContentWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 50px;
+  align-items: center;
+  max-width: 1000px;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 30px;
+  }
+`;
+
+export const TitleSection = styled.div`
+  h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: ${colors.primaryHover};
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: ${colors.secondary};
+  }
 `;
 
 export const CardsContainer = styled.div`
-  display: flex;
-  gap: 20px;
-  margin-top: 30px;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 20px;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
 `;
 
 export const Card = styled.div`
   background: ${colors.white};
-  border-radius: 15px;
-  padding: 25px;
-  width: 260px;
-  text-align: center;
-  box-shadow: 0 4px 20px ${colors.shadow};
+  border-left: 6px solid ${colors.primary};
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0px 4px 12px ${colors.shadow};
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  transform: scale(1);
+  position: relative;
   overflow: hidden;
 
   &:hover {
-    transform: scale(0.95) translateY(-5px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 18px ${colors.shadow};
   }
 
   h2 {
-    margin-bottom: 15px;
-    font-size: 1.7rem;
-    font-weight: 600;
-    color: ${colors.primary};
-    line-height: 1.5;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    color: ${colors.primaryHover};
   }
 
   p {
     font-size: 1rem;
     color: ${colors.text};
-    line-height: 1.6;
-    font-weight: 400;
-  }
-
-  @media (max-width: 768px) {
-    width: 100%;
-    padding: 20px;
   }
 `;
