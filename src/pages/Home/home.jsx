@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
 const colors = {
-  primary: "#5D8A8E",       
-  primaryHover: "#4F7772",  
-  secondary: "#A1B3B0",    
-  background: "#F4F6F5",    
-  text: "#333333",          
-  white: "#FFFFFF",          
-  shadow: "rgba(0, 0, 0, 0.1)", 
-  border: "#D6CFC7",        
-  accent: "#F2C77B"      
+  primary: "#5D8A8E",
+  primaryHover: "#4F7772",
+  secondary: "#A1B3B0",
+  background: "#F4F6F5",
+  text: "#333333",
+  white: "#FFFFFF",
+  shadow: "rgba(0, 0, 0, 0.1)",
+  border: "#D6CFC7",
+  accent: "#F2C77B",
 };
 
 export const HomeContainer = styled.div`

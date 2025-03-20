@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
 const colors = {
-  primary: "#5D8A8E",       
-  primaryHover: "#4F7772",  
-  secondary: "#A1B3B0",    
-  background: "#F4F6F5",    
-  text: "#333333",          
-  white: "#FFFFFF",          
-  shadow: "rgba(0, 0, 0, 0.1)", 
-  border: "#D6CFC7",        
-  accent: "#F2C77B"      
+  primary: "#5D8A8E",
+  primaryHover: "#4F7772",
+  secondary: "#A1B3B0",
+  background: "#F4F6F5",
+  text: "#333333",
+  white: "#FFFFFF",
+  shadow: "rgba(0, 0, 0, 0.1)",
+  border: "#D6CFC7",
+  accent: "#F2C77B",
 };
 
 export const DiaryContainer = styled.div`
@@ -25,6 +25,12 @@ export const DiaryContainer = styled.div`
 
   @media (max-width: 1024px) {
     gap: 20px;
+    padding: 15px;
+  }
+
+  @media (max-width: 768px) {
+    gap: 15px;
+    padding: 10px;
   }
 `;
 
@@ -105,11 +111,6 @@ export const Card = styled.div`
   word-break: break-word;
   text-overflow: ellipsis;
 
-  &:hover {
-    box-shadow: 0px 4px 12px ${colors.shadow};
-    transform: translateY(-2px);
-  }
-
   p {
     font-size: 1rem;
     color: ${colors.text};
@@ -131,7 +132,7 @@ export const Card = styled.div`
   }
 `;
 
-export const TextAreaWrapper = styled.div`
+export const InputWrapper = styled.div`
   display: flex;
   gap: 10px;
   width: 100%;
@@ -144,21 +145,13 @@ export const TextAreaWrapper = styled.div`
   }
 `;
 
-export const TextArea = styled.textarea`
-  width: 100%;
-  height: 120px;
+export const Input = styled.input`
+  flex: 1;
   padding: 10px;
   font-size: 1rem;
   border-radius: 8px;
   border: 1px solid ${colors.border};
-  resize: none;
-  outline: none;
-  background: ${colors.white};
-  transition: border 0.3s ease;
-
-  &:focus {
-    border-color: ${colors.primary};
-  }
+  overflow: hidden;
 
   @media (max-width: 768px) {
     font-size: 0.9rem;
@@ -166,7 +159,7 @@ export const TextArea = styled.textarea`
 
   @media (max-width: 480px) {
     font-size: 0.8rem;
-    height: 100px;
+    padding: 8px;
   }
 `;
 

@@ -6,7 +6,7 @@ import {
   ListCard,
   ListContent,
   AddButton,
-  InputContainer,
+  InputWrapper,
   Input,
   TaskItem,
   Checkbox,
@@ -59,7 +59,7 @@ export default function List() {
       </TitleSection>
       <ListWrapper>
         <ListContent>
-          <InputContainer>
+          <InputWrapper>
             <Input
               type="text"
               value={newTask}
@@ -72,7 +72,7 @@ export default function List() {
             <AddButton onClick={handleAddTask} disabled={!newTask.trim()}>
               Adicionar
             </AddButton>
-          </InputContainer>
+          </InputWrapper>
           <CharacterCounter>
             {newTask.length}/{MAX_CHARACTERS} caracteres
           </CharacterCounter>

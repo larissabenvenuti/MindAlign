@@ -6,8 +6,8 @@ import {
   TitleSection,
   CardsContainer,
   Card,
-  TextAreaWrapper,
-  TextArea,
+  InputWrapper,
+  Input,
   AddButton,
   DeleteButton,
   EmptyState,
@@ -52,8 +52,8 @@ export default function Diary() {
       </TitleSection>
       <DiaryWrapper>
         <CardsContainer>
-          <TextAreaWrapper>
-          <TextArea
+          <InputWrapper>
+          <Input
             placeholder="Escreva seu pensamento..."
             value={text}
             onChange={(e) => {
@@ -68,7 +68,7 @@ export default function Diary() {
           >
             Adicionar
           </AddButton>
-          </TextAreaWrapper>
+          </InputWrapper>
           <CharacterCount isOverLimit={text.length > MAX_CHARACTERS}>
             {text.length}/{MAX_CHARACTERS} caracteres
           </CharacterCount>

@@ -4,7 +4,7 @@ import {
   HabitTrackerContainer,
   HabitTrackerWrapper,
   TitleSection,
-  HabitInputWrapper,
+  InputWrapper,
   Input,
   AddButton,
   HabitTable,
@@ -63,7 +63,7 @@ export default function HabitTracker() {
       </TitleSection>
 
       <HabitTrackerWrapper>
-        <HabitInputWrapper>
+        <InputWrapper>
           <Input
             type="text"
             placeholder="Adicionar novo hábito"
@@ -73,7 +73,7 @@ export default function HabitTracker() {
           <AddButton onClick={handleAddHabit} disabled={!habitName.trim()}>
             Adicionar
           </AddButton>
-        </HabitInputWrapper>
+        </InputWrapper>
 
         <HabitTable>
           <TableHeader>

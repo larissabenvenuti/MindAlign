@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
 const colors = {
-  primary: "#5D8A8E",       
-  primaryHover: "#4F7772",  
-  secondary: "#A1B3B0",    
-  background: "#F4F6F5",    
-  text: "#333333",          
-  white: "#FFFFFF",          
-  shadow: "rgba(0, 0, 0, 0.1)", 
-  border: "#D6CFC7",        
-  accent: "#F2C77B"      
+  primary: "#5D8A8E",
+  primaryHover: "#4F7772",
+  secondary: "#A1B3B0",
+  background: "#F4F6F5",
+  text: "#333333",
+  white: "#FFFFFF",
+  shadow: "rgba(0, 0, 0, 0.1)",
+  border: "#D6CFC7",
+  accent: "#F2C77B",
 };
 
 export const HabitTrackerContainer = styled.div`
@@ -25,6 +25,12 @@ export const HabitTrackerContainer = styled.div`
 
   @media (max-width: 1024px) {
     gap: 20px;
+    padding: 15px;
+  }
+
+  @media (max-width: 768px) {
+    gap: 15px;
+    padding: 10px;
   }
 `;
 
@@ -51,24 +57,51 @@ export const HabitTrackerWrapper = styled.div`
 
 export const TitleSection = styled.div`
   text-align: center;
-  margin-bottom: 30px;
 
   h1 {
-    font-size: 2rem;
+    font-size: 1.7rem;
+    font-weight: bold;
     color: ${colors.primaryHover};
   }
 
   p {
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: ${colors.secondary};
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 0.7rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.3rem;
+    }
+
+    p {
+      font-size: 0.6rem;
+    }
   }
 `;
 
-export const HabitInputWrapper = styled.div`
+export const InputWrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 10px;
   margin-bottom: 20px;
+  width: 100%;
+  flex-wrap: wrap;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const Input = styled.input`
@@ -90,7 +123,7 @@ export const Input = styled.input`
 `;
 
 export const AddButton = styled.button`
-  padding: 10px;
+  padding: 12px 15px;
   font-size: 1rem;
   background-color: ${colors.accent};
   color: ${colors.white};
@@ -98,6 +131,8 @@ export const AddButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 150px;
 
   &:hover {
     background-color: ${colors.primaryHover};
@@ -110,19 +145,29 @@ export const AddButton = styled.button`
 
   @media (max-width: 768px) {
     font-size: 0.9rem;
-    padding: 8px;
+    padding: 10px;
   }
 
   @media (max-width: 480px) {
-    font-size: 0.8rem;
-    padding: 6px;
+    font-size: 0.85rem;
+    padding: 8px;
   }
 `;
 
-export const HabitTable = styled.table`
+export const HabitTable = styled.div`
+  width: 100%;
+  overflow-x: auto;
+`;
+
+export const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  min-width: 500px;
+
+  @media (max-width: 480px) {
+    min-width: 100%;
+  }
 `;
 
 export const TableHeader = styled.thead`
@@ -137,12 +182,21 @@ export const TableRow = styled.tr`
 export const TableCell = styled.th`
   padding: 10px;
   border: 1px solid ${colors.border};
+
+  @media (max-width: 480px) {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
 `;
 
 export const TableBody = styled.tbody``;
 
 export const Checkbox = styled.input`
   transform: scale(1.5);
+
+  @media (max-width: 480px) {
+    transform: scale(1.2);
+  }
 `;
 
 export const DeleteButton = styled.button`
@@ -156,6 +210,10 @@ export const DeleteButton = styled.button`
   &:hover {
     color: ${colors.primaryHover};
   }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
 `;
 
 export const EmptyState = styled.div`
@@ -167,4 +225,14 @@ export const EmptyState = styled.div`
   background: ${colors.white};
   border-radius: 8px;
   box-shadow: 0 2px 5px ${colors.shadow};
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    padding: 15px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
 `;

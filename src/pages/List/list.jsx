@@ -1,17 +1,16 @@
 import styled from "styled-components";
 
 const colors = {
-  primary: "#5D8A8E",       
-  primaryHover: "#4F7772",  
-  secondary: "#A1B3B0",    
-  background: "#F4F6F5",    
-  text: "#333333",          
-  white: "#FFFFFF",          
-  shadow: "rgba(0, 0, 0, 0.1)", 
-  border: "#D6CFC7",        
-  accent: "#F2C77B"      
+  primary: "#5D8A8E",
+  primaryHover: "#4F7772",
+  secondary: "#A1B3B0",
+  background: "#F4F6F5",
+  text: "#333333",
+  white: "#FFFFFF",
+  shadow: "rgba(0, 0, 0, 0.1)",
+  border: "#D6CFC7",
+  accent: "#F2C77B",
 };
-
 
 export const ListContainer = styled.div`
   display: flex;
@@ -26,6 +25,12 @@ export const ListContainer = styled.div`
 
   @media (max-width: 1024px) {
     gap: 20px;
+    padding: 15px;
+  }
+
+  @media (max-width: 768px) {
+    gap: 15px;
+    padding: 10px;
   }
 `;
 
@@ -79,14 +84,13 @@ export const TitleSection = styled.div`
       font-size: 1.3rem;
     }
 
-
     p {
       font-size: 0.6rem;
     }
   }
 `;
 
-export const InputContainer = styled.div`
+export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -166,13 +170,30 @@ export const ListCard = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
+  transition: 0.3s ease-in-out;
+  overflow: hidden;
+  word-break: break-word;
+  text-overflow: ellipsis;
 
-  @media (max-width: 768px) {
-    padding: 10px;
+  p {
+    font-size: 1rem;
+    color: ${colors.text};
+    word-wrap: break-word;
+  }
+
+  small {
+    font-size: 0.8rem;
+    color: ${colors.secondary};
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   @media (max-width: 480px) {
-    padding: 8px;
+    padding: 10px;
   }
 `;
 
@@ -189,7 +210,7 @@ export const TaskItem = styled.div`
   overflow: hidden;
   word-break: break-word;
   text-overflow: ellipsis;
-  
+
   span {
     text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
     color: ${(props) => (props.completed ? colors.secondary : colors.text)};
@@ -212,10 +233,10 @@ export const Checkbox = styled.input`
 `;
 
 export const TaskCounter = styled.p`
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: ${colors.text};
   text-align: center;
-  margin-top: 10px;
+  margin-top: 5px;
 
   span {
     font-weight: bold;

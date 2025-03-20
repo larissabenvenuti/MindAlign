@@ -9,7 +9,7 @@ const colors = {
   white: "#FFFFFF",          
   shadow: "rgba(0, 0, 0, 0.1)", 
   border: "#D6CFC7",        
-  accent: "#F2C77B"      
+  accent: "#F2C77B",     
 };
 
 export const CalendarContainer = styled.div`
@@ -139,5 +139,20 @@ export const Today = styled.div`
     @media (max-width: 768px) {
       flex-direction: column;
     }
+  }
+
+  .fc-event {
+    background-color: ${colors.secondary} !important;
+    border-color: ${colors.secondary} !important;
+    color: ${colors.white} !important;
+  }
+
+  .fc-daygrid-dot-event {
+    background-color: ${colors.secondary} !important;
+    border-color: ${colors.secondary} !important;
+  }
+
+  .fc-daygrid-event-dot {
+    border: none !important;
   }
 `;
