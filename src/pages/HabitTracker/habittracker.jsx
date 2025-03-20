@@ -44,6 +44,7 @@ export const HabitTrackerWrapper = styled.div`
   border-radius: 10px;
   box-shadow: 0 4px 10px ${colors.shadow};
   margin-bottom: 20px;
+  align-items: center;
 
   @media (max-width: 768px) {
     padding: 15px;
@@ -155,19 +156,9 @@ export const AddButton = styled.button`
 `;
 
 export const HabitTable = styled.div`
-  width: 100%;
   overflow-x: auto;
-`;
-
-export const StyledTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  min-width: 500px;
-
-  @media (max-width: 480px) {
-    min-width: 100%;
-  }
+  max-width: 100%;
+  display: relative;
 `;
 
 export const TableHeader = styled.thead`
@@ -179,17 +170,19 @@ export const TableRow = styled.tr`
   text-align: center;
 `;
 
-export const TableCell = styled.th`
-  padding: 10px;
+export const TableTitle = styled.th`
+  padding: 15px;
   border: 1px solid ${colors.border};
+  width: 100vw;
 
   @media (max-width: 480px) {
     font-size: 0.85rem;
-    padding: 8px;
+    padding: 10px;
   }
 `;
 
-export const TableBody = styled.tbody``;
+export const TableBody = styled.tbody`
+`;
 
 export const Checkbox = styled.input`
   transform: scale(1.5);
@@ -204,8 +197,9 @@ export const DeleteButton = styled.button`
   border: none;
   cursor: pointer;
   color: ${colors.primary};
-  font-size: 1.2rem;
+  font-size: 1rem;
   transition: color 0.3s ease;
+  margin: 10px;
 
   &:hover {
     color: ${colors.primaryHover};

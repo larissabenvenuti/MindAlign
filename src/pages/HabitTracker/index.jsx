@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableBody,
   TableRow,
-  TableCell,
+  TableTitle,
   Checkbox,
   DeleteButton,
   EmptyState,
@@ -78,9 +78,9 @@ export default function HabitTracker() {
         <HabitTable>
           <TableHeader>
             <TableRow>
-              <TableCell>Hábito</TableCell>
+              <TableTitle>Hábito</TableTitle>
               {daysOfWeek.map((day) => (
-                <TableCell key={day}>{day}</TableCell>
+                <TableTitle key={day}>{day}</TableTitle>
               ))}
             </TableRow>
           </TableHeader>
@@ -91,20 +91,20 @@ export default function HabitTracker() {
             ) : (
               habits.map((habit, habitIndex) => (
                 <TableRow key={habit.name}>
-                  <TableCell>
+                  <TableTitle>
                     {habit.name}
                     <DeleteButton onClick={() => handleDeleteHabit(habitIndex)}>
                       <FaTrash />
                     </DeleteButton>
-                  </TableCell>
+                  </TableTitle>
                   {habit.weekData.map((checked, dayIndex) => (
-                    <TableCell key={dayIndex}>
+                    <TableTitle key={dayIndex}>
                       <Checkbox
                         type="checkbox"
                         checked={checked}
                         onChange={() => handleToggleCheckbox(habitIndex, dayIndex)}
                       />
-                    </TableCell>
+                    </TableTitle>
                   ))}
                 </TableRow>
               ))
